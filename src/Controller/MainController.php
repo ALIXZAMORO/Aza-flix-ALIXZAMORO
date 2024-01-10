@@ -32,11 +32,20 @@ public function show($id): Response
   $twigResponse = $this->render("main/show.html.twig", [
 
     "movieId" => $id
-    
+
   ]);
 
   return $twigResponse;
+ }
 
+ /**
+  * @Route("/search", name="movie_search")
+  * 
+  * @return Response
+  */
+ public function  list(): Response
+ {
+  return $this->render("main/list.html.twig");
  }
 
 }
