@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MainController extends AbstractController
 {
 /**
- * @Route("/radium", name="default", methods={"GET", "POST"})
+ * @Route("/", name="default", methods={"GET", "POST"})
  * 
  * @return Response
  */
@@ -19,4 +19,24 @@ class MainController extends AbstractController
         
         return $twigResponse;
     }
+
+
+/**
+ * @Route("/movies/{id}", name="movie_show", requirements={"id"="\d+"} ,methods={"GET"})
+ * 
+ * @return Response
+ */
+
+public function show($id): Response
+ {
+  $twigResponse = $this->render("main/show.html.twig", [
+
+    "movieId" => $id
+    
+  ]);
+
+  return $twigResponse;
+
+ }
+
 }
