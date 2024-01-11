@@ -6,7 +6,18 @@
 {# movieForTwig #}
 
 {% dump(movieForTwig) %}
-
+{# 
+array:8 [▼
+  "type" => "Série"
+  "title" => "Game of Thrones"
+  "release_date" => 2011
+  "duration" => 52
+  "summary" => "Neuf familles nobles se battent pour le contrôle des terres de Westeros, tandis qu'un ancien ennemi revient..."
+  "synopsis" => "Il y a très longtemps, à une époque oubliée, une force a détruit l'équilibre des saisons. Dans un pays où l'été peut durer plusieurs années et l'hiver toute une ▶"
+  "poster" => "https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg"
+  "rating" => 4.7
+]
+#}
     <div class="container bg-lighttt pt-5">
 
         <div class="row mb-2">
@@ -24,7 +35,7 @@
                     <div class="col-8 p-4 d-flex flex-column position-static bg-light">
                         <a href="" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
                         <strong class="d-inline-block mb-2 text-primary">{{ movieForTwig.type }}</strong>
-                        <h3 class="mb-1">({{ movieForTwig.title }})</h3>
+                        <h3 class="mb-1">{{ movieForTwig.title }}</h3>
                         <div class="mb-1 text-muted">{{ movieForTwig.duration }} min</div>
                         <p>
                             <span class="badge bg-warning text-dark">Animation</span>
@@ -42,13 +53,15 @@
                             <i class="bi bi-star-half"></i>
                             <span class="ps-1">{{ movieForTwig.rating }}</span>
                         </div>
-
+                        
+                        {% if movieForTwig.type == 'Série' %}
                         <h2>3 Saisons</h2>
                         <ul class="list-unstyled">
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 2</span><small class="ms-1">(11 épisodes)</small></li>
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li>
                         </ul>
+                        {% endif %}
 
                         <dl class="row">
                             <dt class="col-sm-12">Avec</dt>
@@ -60,7 +73,7 @@
                             <dt class="col-sm-12">Pays</dt>
                             <dd class="col-sm-12">USA</dd>
                             <dt class="col-sm-12">Année</dt>
-                            <dd class="col-sm-12">1998</dd>
+                            <dd class="col-sm-12">{{ movieForTwig.release_date }}</dd>
                         </dl>
 
                     </div>
