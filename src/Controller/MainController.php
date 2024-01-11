@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Models\MovieModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +16,21 @@ class MainController extends AbstractController
  */
     public function home(): Response
     {
-      $twigResponse = $this->render("main/home.html.twig");
+      $allMovies = MovieModel::getAllMovies();
+     // dd($allMovies);
+
+      $demoData = "Bonjour du mardi matin.";
+      $twigResponse = $this->render("main/home.html.twig",
+    [
+      "monTexteKilEstBo" => $demoData,
+      "movieList" => $allMovies
+
+    ]);
         
         return $twigResponse;
-    }
+  }
+
+
 
 
 /**
@@ -34,6 +46,8 @@ public function show($id): Response
     "movieId" => $id
 
   ]);
+
+  Response::HTTP_NOT_FOUND;
 
   return $twigResponse;
  }

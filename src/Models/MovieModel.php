@@ -52,4 +52,26 @@ class MovieModel
 
 ];
 
+/**
+ * renvoit tous les films
+ * 
+ *
+ * @return mixed[] tableau avec tous les films
+ */
+public static function getAllMovies(): array
+{
+    return self::$shows;
+
+}
+
+/**
+ * renvoit les informations d'un film
+ * 
+ * @param integer $id
+ * @return array
+ */
+public static function getMovie($id): array
+{
+    return self::$shows[$id];
+}
 }
