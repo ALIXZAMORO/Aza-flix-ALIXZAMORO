@@ -22,6 +22,8 @@ class Oflix extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        $faker = \Faker\Factory::create();
+        $fakerFr = \Faker\Factory::create('fr_FR');
      
         $genres = ["Action", "Animation", "Aventure", "Comédie", "Dessin Animé", "Documentaire", "Drame", "Espionnage", "Famille", "Fantastique", "Historique", "Policier", "Romance", "Science-fiction", "Thriller", "Western"];
         
@@ -59,8 +61,8 @@ class Oflix extends Fixture
       
             $newPerson = new Person();
 
-            $newPerson->setFirstname("prénom #" .$i);
-            $newPerson->setLastname("nom #" .$i);
+            $newPerson->setFirstname($faker->firstName());
+            $newPerson->setLastname($faker->lastName());
 
             $manager->persist($newPerson);
 
@@ -76,8 +78,8 @@ class Oflix extends Fixture
             $newMovie->setTitle("Titre #" .$i);
             $newMovie->setDuration(mt_rand(10, 360));
             $newMovie->setRating(mt_rand(0,50) / 10);
-            $newMovie->setSummary("lorem ipsum summary");
-            $newMovie->setSynopsis("lorem ipsum synopsis");
+            $newMovie->setSummary($fakerFr->realText());
+            $newMovie->setSynopsis($fakerFr->realText());
             $newMovie->setReleaseDate(new DateTime("1970-01-01"));
             $newMovie->setCountry("FR");
             $newMovie->setPoster("https://img.freepik.com/vecteurs-premium/fond-film-cinema-premiere_41737-251.jpg");
