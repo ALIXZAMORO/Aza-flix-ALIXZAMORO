@@ -16,9 +16,12 @@ class MainController extends AbstractController
  * 
  * @return Response
  */
-    public function home(Request $request): Response
+    public function home(Request $request, MovieRepository $movieRepository): Response
     {
-      $allMovies = MovieModel::getAllMovies();
+     // $allMovies = MovieModel::getAllMovies();
+
+     $allMovies = $movieRepository->findAll();
+
      dump($allMovies);
 
      $session = $request->getSession();

@@ -54,7 +54,7 @@ class Oflix extends Fixture
 
         /** @var Person[] $allPerson */
         $allPerson = [];
-        for ($i=0; $i < 20; $i++) { 
+        for ($i=0; $i < 2000; $i++) { 
       
             $newPerson = new Person();
 
@@ -102,6 +102,8 @@ class Oflix extends Fixture
                 $newCasting->setMovie($movie);
                 $randomPerson = $allPerson[mt_rand(0, count($allPerson)-1)];
                 $newCasting->setPerson($randomPerson);
+
+                $manager->persist($newCasting);
             }
         }
 

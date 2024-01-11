@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FavoritesController extends AbstractController
 {
     /**
-     * @Route("/favorites", name="app_favorites")
+     * @Route("/favorites", name="app_favorites_add")
      */
     public function index(Request $request): Response
     {
