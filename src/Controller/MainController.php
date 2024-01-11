@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Models\MovieModel;
+use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,9 +44,10 @@ class MainController extends AbstractController
  * @return Response
  */
 
-public function show($id): Response
+public function show($id, MovieRepository $movieRepository): Response
  {
-  $movie = MovieModel::getMovie($id);
+  $movie = $movieRepository->find($id);
+  //dd($movie);
 
   $twigResponse = $this->render("main/show.html.twig",
    [
