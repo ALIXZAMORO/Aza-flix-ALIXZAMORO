@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Models\MovieModel;
+use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,7 +48,7 @@ class MainController extends AbstractController
  * @return Response
  */
 
-public function show($id, MovieRepository $movieRepository): Response
+public function show($id, MovieRepository $movieRepository, CastingRepository $castingRepository): Response
  {
   $movie = $movieRepository->find($id);
   //dd($movie);
@@ -56,13 +57,20 @@ public function show($id, MovieRepository $movieRepository): Response
     throw $this->createNotFoundException("Ce film n'existe pas");
   }
 
+    $allCastingFromMovie = $castingRepository->findBy(["movie" => $movie], ["creditOrder" => "ASC"]);
+  
+    dump($allCastingFromMovie);
+
   $twigResponse = $this->render("main/show.html.twig",
    [
 
     "movieId" => $id,
-    "movieForTwig" => $movie
+    "movieForTwig" => $movie,
+    "allCastingFromBDD" => $allCastingFromMovie
 
   ]);
+
+  
 
   return $twigResponse;
 

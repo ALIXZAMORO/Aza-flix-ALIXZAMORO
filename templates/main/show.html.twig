@@ -66,12 +66,20 @@ array:8 [▼
                         <dl class="row">
                             <dt class="col-sm-12">Avec</dt>
                             <dd class="col-sm-12">
-                                Acteur 1 (Tilt)<br>
-                                Acteur 2 (La reine)<br>
-                                Acteur 3 (Franz)<br>
+
+                          {% set sortedCastings = movieForTwig.castings|sort((casting1, casting2) => casting1.creditorder <=> casting2.creditorder) %}
+                                {% for casting in sortedCastings %}
+                                    {{ casting.person.firstname }} {{ casting.person.lastname }} ({{ casting.role }}) ({{ casting.creditOrder }})<br>
+                                {% endfor %}
+                                <hr>
+                                {% set sortedCastings = movieForTwig.castings|sort((casting1, casting2) => casting1.creditorder <=> casting2.creditorder) %}
+                                {% for casting in allCastingFromBDD %}
+                                    {{ casting.person.firstname }} {{ casting.person.lastname }} ({{ casting.role }}) ({{ casting.creditOrder }})<br>
+                                {% endfor %}
+
                             </dd>
                             <dt class="col-sm-12">Pays</dt>
-                            <dd class="col-sm-12">USA</dd>
+                            <dd class="col-sm-12">{{ movieForTwig.country }}</dd>
                             <dt class="col-sm-12">Année</dt>
                             <dd class="col-sm-12">{{ movieForTwig.releaseDate|date("Y") }}</dd>
                         </dl>
