@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Casting;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
@@ -24,6 +25,7 @@ class Oflix extends Fixture
         $genres = ["Action", "Animation", "Aventure", "Comédie", "Dessin Animé", "Documentaire", "Drame", "Espionnage", "Famille", "Fantastique", "Historique", "Policier", "Romance", "Science-fiction", "Thriller", "Western"];
         
 
+        /** @var Genre[] $allGenre */
         $allGenre = [];
         foreach ($genres as $genreName) {
             
@@ -37,6 +39,7 @@ class Oflix extends Fixture
         }
 
         $types = ["film", "série"];
+        /** @var Type[] $allTypes */
         $allTypes = [];
         foreach ($types as $type) {
             
@@ -49,7 +52,8 @@ class Oflix extends Fixture
             $allTypes[] = $newType;
         }
 
-        $newPerson = [];
+        /** @var Person[] $allPerson */
+        $allPerson = [];
         for ($i=0; $i < 20; $i++) { 
       
             $newPerson = new Person();
@@ -62,6 +66,8 @@ class Oflix extends Fixture
             $allPerson[] = $newPerson; 
         }
 
+        /** @var Movie[] $allMovies */
+        $allMovies = [];
         for ($i=0; $i < 100; $i++) { 
                 
             $newMovie = new Movie();
@@ -79,6 +85,24 @@ class Oflix extends Fixture
             $newMovie->setType($randomType);
 
             $manager->persist($newMovie);
+
+            $allMovies[] = $newMovie;
+        }
+
+        foreach ($allMovies as $movie) {
+            
+            $randomNbCasting = mt_rand(3,5);
+            for ($i=1; $i <= $randomNbCasting; $i++) { 
+                
+                $newCasting = new Casting();
+
+                $newCasting->setRole("Role #" .$i);
+                $newCasting->setCreditOrder($i);
+
+                $newCasting->setMovie($movie);
+                $randomPerson = $allPerson[mt_rand(0, count($allPerson)-1)];
+                $newCasting->setPerson($randomPerson);
+            }
         }
 
         $manager->flush();
