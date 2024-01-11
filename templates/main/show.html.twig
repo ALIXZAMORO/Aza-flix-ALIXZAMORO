@@ -82,7 +82,8 @@ array:8 [▼
                             <dt class="col-sm-12">Année</dt>
                             <dd class="col-sm-12">{{ movieForTwig.releaseDate|date("Y") }}</dd>
                         </dl>
-
+                        <div class="d-flex mb-4">
+                        <a href="{{ path('app_review_add', {'id':movieForTwig.id})}}" class="btn btn-primary">Ajouter un commentaire</a>
                     </div>
                 </div>
 
