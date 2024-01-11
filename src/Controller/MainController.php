@@ -49,6 +49,10 @@ public function show($id, MovieRepository $movieRepository): Response
   $movie = $movieRepository->find($id);
   //dd($movie);
 
+  if ($movie === null) {
+    throw $this->createNotFoundException("Ce film n'existe pas");
+  }
+
   $twigResponse = $this->render("main/show.html.twig",
    [
 
