@@ -41,15 +41,18 @@ class MainController extends AbstractController
 
 public function show($id): Response
  {
-  $twigResponse = $this->render("main/show.html.twig", [
+  $movie = MovieModel::getMovie($id);
 
-    "movieId" => $id
+  $twigResponse = $this->render("main/show.html.twig",
+   [
+
+    "movieId" => $id,
+    "movieForTwig" => $movie
 
   ]);
 
-  Response::HTTP_NOT_FOUND;
-
   return $twigResponse;
+
  }
 
  /**

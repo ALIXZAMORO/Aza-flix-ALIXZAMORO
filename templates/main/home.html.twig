@@ -54,7 +54,7 @@
                 ]
 
                  #}
-                {% for movie in movieList %}
+                {% for key, movie in movieList %}
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
                     <div class="col-4 movie__poster" style="background-image: url({{ movie.poster }});">
                         <img src="{{ asset('images/poster-placeholder.png') }}" class="img-fluid">
@@ -62,12 +62,10 @@
                     </div>
                     <div class="col-8 p-4 d-flex flex-column position-static">
                         <a href="./favorites.html" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
-                        <strong class="d-inline-block mb-2 text-primary">Film</strong>
-                        <h3 class="mb-1">A Bug's Life</h3>
-                        <div class="mb-1 text-muted">93 min</div>
-                        <p><small>Tilt, fourmi quelque peu tête en l'air, détruit par
-                                inadvertance la
-                                récolte de la saison.</small>
+                        <strong class="d-inline-block mb-2 text-primary">{{ movie.type }}</strong>
+                        <h3 class="mb-1">{{ movie.title }}</h3>
+                        <div class="mb-1 text-muted">{{ movie.duration }} min</div>
+                        <p><small>T{{ movie.summary }}</small>
                         </p>
                         <div class="d-flex" style="color: orange;">
                             <i class="bi bi-star-fill"></i>
@@ -75,9 +73,9 @@
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-half"></i>
-                            <span class="ps-1">4.8</span>
+                            <span class="ps-1">{{ movie.rating }}</span>
                         </div>
-                        <a href="/movies/1" class="fs-1 mt-3 text-danger align-self-start">
+                        <a href="/movies/{{ key }}" class="fs-1 mt-3 text-danger align-self-start">
                             <i class="bi bi-arrow-right-square"></i>
                         </a>
                     </div>
