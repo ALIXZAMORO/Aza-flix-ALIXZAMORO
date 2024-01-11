@@ -52,7 +52,7 @@ array:8 [▼
                             <i class="bi bi-star-half"></i>
                             <span class="ps-1">{{ movieForTwig.rating }}</span>
                         </div>
-                        
+
                         {% if movieForTwig.type.name == 'série' %}
                             <h2>{{ movieForTwig.seasons|length }} {{ movieForTwig.seasons|length > 1 ? 'Saisons' : 'Saison' }}</h2>
                             <ul class="list-unstyled">
@@ -60,23 +60,22 @@ array:8 [▼
                                     <li><span class="badge bg-danger fs-6 mb-2">Saison {{ season.number }}</span><small class="ms-1">({{ season.nbEpisodes }} épisodes)</small></li>
                                 {% endfor %}
 
-                        </ul>
+                            </ul>
                         {% endif %}
-
                         <dl class="row">
-                            <dt class="col-sm-12">Avec</dt>
+                            <dt class="col-sm-12">Avec (Sort Twig)</dt>
                             <dd class="col-sm-12">
-
-                          {% set sortedCastings = movieForTwig.castings|sort((casting1, casting2) => casting1.creditorder <=> casting2.creditorder) %}
+                            {% set sortedCastings = movieForTwig.castings|sort((casting1, casting2) => casting1.creditorder <=> casting2.creditorder) %}
                                 {% for casting in sortedCastings %}
                                     {{ casting.person.firstname }} {{ casting.person.lastname }} ({{ casting.role }}) ({{ casting.creditOrder }})<br>
                                 {% endfor %}
-                                <hr>
-                                {% set sortedCastings = movieForTwig.castings|sort((casting1, casting2) => casting1.creditorder <=> casting2.creditorder) %}
+                            </dd>
+                            <dt class="col-sm-12">Avec (From BDD)</dt>
+                            <dd class="col-sm-12">
                                 {% for casting in allCastingFromBDD %}
                                     {{ casting.person.firstname }} {{ casting.person.lastname }} ({{ casting.role }}) ({{ casting.creditOrder }})<br>
                                 {% endfor %}
-
+                                
                             </dd>
                             <dt class="col-sm-12">Pays</dt>
                             <dd class="col-sm-12">{{ movieForTwig.country }}</dd>

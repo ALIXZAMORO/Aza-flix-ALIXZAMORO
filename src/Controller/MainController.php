@@ -70,8 +70,6 @@ public function show($id, MovieRepository $movieRepository, CastingRepository $c
 
   ]);
 
-  
-
   return $twigResponse;
 
  }
