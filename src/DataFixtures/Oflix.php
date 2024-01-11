@@ -8,6 +8,10 @@ use App\Entity\Movie;
 use App\Entity\Person;
 use App\Entity\Season;
 use App\Entity\Type;
+use Bluemmb\Faker\PicsumPhotosProvider;
+use Xylis\FakerCinema\Provider\Movie as FakerMovieProvider;
+use Xylis\FakerCinema\Provider\TvShow as FakerTvShowProvider;
+use Xylis\FakerCinema\Provider\Person as FakerPersonProvider;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -25,6 +29,14 @@ class Oflix extends Fixture
         $faker = \Faker\Factory::create();
         $fakerFr = \Faker\Factory::create('fr_FR');
      
+        // * les providers vont ajouter des méthodes avec de nouvelles fausses données
+        $faker->addProvider(new PicsumPhotosProvider($faker));
+        // ? on utilise le use pour donner un alias à la classe, que PHP ne se trompe pas avec notre entité
+        $faker->addProvider(new FakerMovieProvider ($faker));
+        $faker->addProvider(new FakerPersonProvider($faker));
+        $faker->addProvider(new FakerTvShowProvider($faker));
+
+
         $genres = ["Action", "Animation", "Aventure", "Comédie", "Dessin Animé", "Documentaire", "Drame", "Espionnage", "Famille", "Fantastique", "Historique", "Policier", "Romance", "Science-fiction", "Thriller", "Western"];
         
 
@@ -61,8 +73,11 @@ class Oflix extends Fixture
       
             $newPerson = new Person();
 
-            $newPerson->setFirstname($faker->firstName());
-            $newPerson->setLastname($faker->lastName());
+            $actorFullName = $faker->actor();// Cate Blanchett
+            $actorNames = explode(" ", $actorFullName);
+            $newPerson->setFirstname($actorNames[0]);
+            $newPerson->setLastname($actorNames[1]);
+
 
             $manager->persist($newPerson);
 
@@ -82,7 +97,13 @@ class Oflix extends Fixture
             $newMovie->setSynopsis($fakerFr->realText());
             $newMovie->setReleaseDate(new DateTime("1970-01-01"));
             $newMovie->setCountry("FR");
-            $newMovie->setPoster("https://img.freepik.com/vecteurs-premium/fond-film-cinema-premiere_41737-251.jpg");
+            $defaultUrl = "https://amc-theatres-res.cloudinary.com/amc-cdn/static/images/fallbacks/DefaultOneSheetPoster.jpg";
+            $picsumDefaultUrl = "https://picsum.photos/200/300";
+            
+            $picsumSeededUrl = "https://picsum.photos/seed/aza".$i."/200/300";
+
+            $fakerPicsumSeededUrl = $faker->imageUrl(200,300, 'aza-' . $i);
+            $newMovie->setPoster($fakerPicsumSeededUrl);
 
             $randomType = $allTypes[mt_rand(0, count($allTypes)-1)];
             $newMovie->setType($randomType);
