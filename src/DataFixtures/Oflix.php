@@ -6,6 +6,7 @@ use App\Entity\Casting;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
+use App\Entity\Season;
 use App\Entity\Type;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -106,6 +107,36 @@ class Oflix extends Fixture
                 $manager->persist($newCasting);
             }
         }
+
+        foreach ($allMovies as $movie) {
+
+           $randomNbGenre = mt_rand(3,5);
+           for ($i=0; $i < $randomNbGenre; $i++) { 
+
+            $randomGenre = $allGenre[mt_rand(0, count($allGenre)-1)];
+
+            $movie->addGenre($randomGenre);      
+        }
+    }
+
+    foreach ($allMovies as $movie) {
+        
+        if ($movie->getType()->getName() == "série")
+        {
+            $randomNbSeason = mt_rand(3,10);
+            for ($i=1; $i <= $randomNbSeason; $i++) { 
+                
+                $newSeason = new Season();
+
+                $newSeason->setNumber($i);
+                $newSeason->setNbEpisodes(mt_rand(12, 24));
+
+                $movie->addSeason($newSeason);
+
+                $manager->persist($newSeason);
+            }
+        }
+    }
 
         $manager->flush();
     }

@@ -38,10 +38,9 @@ array:8 [▼
                         <h3 class="mb-1">{{ movieForTwig.title }}</h3>
                         <div class="mb-1 text-muted">{{ movieForTwig.duration }} min</div>
                         <p>
-                            <span class="badge bg-warning text-dark">Animation</span>
-                            <span class="badge bg-warning text-dark">Aventure</span>
-                            <span class="badge bg-warning text-dark">Comédie</span>
-                            <span class="badge bg-warning text-dark">Famille</span>
+                            {% for genre in movieForTwig.genres %}
+                                <span class="badge bg-warning text-dark">{{ genre.name }}</span>
+                            {% endfor %}
                         </p>
                         <p>{{ movieForTwig.synopsis }}
                         </p>
@@ -54,12 +53,13 @@ array:8 [▼
                             <span class="ps-1">{{ movieForTwig.rating }}</span>
                         </div>
                         
-                        {% if movieForTwig.type == 'Série' %}
-                        <h2>3 Saisons</h2>
-                        <ul class="list-unstyled">
-                            <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
-                            <li><span class="badge bg-danger fs-6 mb-2">Saison 2</span><small class="ms-1">(11 épisodes)</small></li>
-                            <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li>
+                        {% if movieForTwig.type.name == 'série' %}
+                            <h2>{{ movieForTwig.seasons|length }} {{ movieForTwig.seasons|length > 1 ? 'Saisons' : 'Saison' }}</h2>
+                            <ul class="list-unstyled">
+                                {% for season in movieForTwig.seasons %}
+                                    <li><span class="badge bg-danger fs-6 mb-2">Saison {{ season.number }}</span><small class="ms-1">({{ season.nbEpisodes }} épisodes)</small></li>
+                                {% endfor %}
+
                         </ul>
                         {% endif %}
 
