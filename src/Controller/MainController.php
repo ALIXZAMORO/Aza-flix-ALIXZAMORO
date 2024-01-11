@@ -6,6 +6,7 @@ use App\Models\MovieModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
@@ -14,15 +15,18 @@ class MainController extends AbstractController
  * 
  * @return Response
  */
-    public function home(): Response
+    public function home(Request $request): Response
     {
       $allMovies = MovieModel::getAllMovies();
-     // dd($allMovies);
+     dump($allMovies);
 
-      $demoData = "Bonjour du mardi matin.";
+     $session = $request->getSession();
+     dump($session->get("favoris"));
+
+      
       $twigResponse = $this->render("main/home.html.twig",
     [
-      "monTexteKilEstBo" => $demoData,
+
       "movieList" => $allMovies
 
     ]);
@@ -31,9 +35,9 @@ class MainController extends AbstractController
   }
 
 
-
-
 /**
+ * affichage d'un film
+ * 
  * @Route("/movies/{id}", name="movie_show", requirements={"id"="\d+"} ,methods={"GET"})
  * 
  * @return Response
@@ -54,6 +58,7 @@ public function show($id): Response
   return $twigResponse;
 
  }
+
 
  /**
   * @Route("/search", name="movie_search")
