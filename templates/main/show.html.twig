@@ -47,7 +47,7 @@ array:8 [▼
 
                         
                         {% include 'partials/_stars.html.twig' with {'ratingStars': movieForTwig.rating} %}
-                        
+
                         {% if movieForTwig.type.name == 'série' %}
                             <h2>{{ movieForTwig.seasons|length }} {{ movieForTwig.seasons|length > 1 ? 'Saisons' : 'Saison' }}</h2>
                             <ul class="list-unstyled">
@@ -84,20 +84,10 @@ array:8 [▼
                     <div class="col-12 p-4 d-flex flex-column position-static bg-light">
                     <dl class="row"> 
                     {% for review in allReviewFromBDD %}
+
                     <dt class="col-sm-12">Critiques de {{ review.username }}</dt>
-                    <dd class"d-flex mb-4" style="color: orange;">
-                    {% for i in 0..4 %}
-                    {% if review.rating - i >= 0.9 %}
-                    <i class="bi bi-star-fill"></i>
-                    {% elseif review.rating - i <= 0.1 %}
-                    <i class="bi bi-star"></i>
-                    {% else %}
-                    <i class="bi bi-star-half"></i>
-                    {% endif %}
                     
-                    {% endfor %}
-                    <span class="ps-1">{{ review.rating }}</span>
-                    </div>
+                    {% include 'partials/_stars.html.twig' with {'ratingStars': review.rating} %}
 
                     <em><p class="card-text">{{ review.content }}</p>
                     <p class="card-subtitle mb-2 text-muted">Vu le {{ review.watchedAt|date('d-m-Y') }}<p></em>
