@@ -44,42 +44,17 @@ array:8 [▼
                         </p>
                         <p>{{ movieForTwig.synopsis }}
                         </p>
+
                         <div class="d-flex mb-4" style="color: orange;">
-                        {% if movieForTwig.rating >= 1 %}
+                        {% for i in 0..4 %}
+                        {% if movieForTwig.rating >= i + 1 %}
                             <i class="bi bi-star-fill"></i>
-                            {% elseif movieForTwig.rating >= 0.5 %}
+                            {% elseif movieForTwig.rating >= i + 0.5 %}
                             <i class="bi bi-star-half"></i>
                             {% else %}
                             <i class="bi bi-star"></i>
                             {% endif %}
-                            {% if movieForTwig.rating >= 2 %}
-                            <i class="bi bi-star-fill"></i>
-                            {% elseif movieForTwig.rating >= 1.5 %}
-                            <i class="bi bi-star-half"></i>
-                            {% else %}
-                            <i class="bi bi-star"></i>
-                            {% endif %}
-                            {% if movieForTwig.rating >= 3 %}
-                            <i class="bi bi-star-fill"></i>
-                            {% elseif movieForTwig.rating >= 2.5 %}
-                            <i class="bi bi-star-half"></i>
-                            {% else %}
-                            <i class="bi bi-star"></i>
-                            {% endif %}
-                            {% if movieForTwig.rating >= 4 %}
-                            <i class="bi bi-star-fill"></i>
-                            {% elseif movieForTwig.rating >= 3.5 %}
-                            <i class="bi bi-star-half"></i>
-                            {% else %}
-                            <i class="bi bi-star"></i>
-                            {% endif %}
-                            {% if movieForTwig.rating >= 5 %}
-                            <i class="bi bi-star-fill"></i>
-                            {% elseif movieForTwig.rating >= 4.5 %}
-                            <i class="bi bi-star-half"></i>
-                            {% else %}
-                            <i class="bi bi-star"></i>
-                            {% endif %}
+                            {% endfor %}
 
                             <span class="ps-1">{{ movieForTwig.rating }}</span>
                         </div>
