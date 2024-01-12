@@ -49,8 +49,10 @@ class MovieController extends AbstractController
     /**
      * @Route("/{id}", name="show", methods={"GET"})
      */
-    public function show(Movie $movie): Response
+    public function show(?Movie $movie): Response
     {
+        if ($movie === null) {throw $this->createNotFoundException("Ce film n'existe pas");}
+
         return $this->render('back/movie/show.html.twig', [
             'movie' => $movie,
         ]);
@@ -59,8 +61,10 @@ class MovieController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Movie $movie, MovieRepository $movieRepository): Response
+    public function edit(Request $request, ?Movie $movie, MovieRepository $movieRepository): Response
     {
+        if ($movie === null) {throw $this->createNotFoundException("Ce film n'existe pas");}
+
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
 
@@ -79,8 +83,10 @@ class MovieController extends AbstractController
     /**
      * @Route("/{id}", name="delete", methods={"POST"})
      */
-    public function delete(Request $request, Movie $movie, MovieRepository $movieRepository): Response
+    public function delete(Request $request, ?Movie $movie, MovieRepository $movieRepository): Response
     {
+        if ($movie === null) {throw $this->createNotFoundException("Ce film n'existe pas");}
+        
         if ($this->isCsrfTokenValid('delete'.$movie->getId(), $request->request->get('_token'))) {
             $movieRepository->remove($movie, true);
         }
