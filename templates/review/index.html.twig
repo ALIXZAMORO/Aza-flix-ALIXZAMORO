@@ -5,7 +5,19 @@
 {% block body %}
     <h1>{{ movieFromBDD.title }}</h1>
     <h2>Ajout de commentaire</h2>
-    {{ form_start(formulaire)}}
+    {# 
+    {'attr': {'novalidate': 'novalidate'}}
+    ça fait doublon avec la version dans la classe
+    ici c'est plus spécifique
+    #}
+    {{ form_start(formulaire, {'attr': {'novalidate': 'novalidate'}})}}
+        {{ form_row(formulaire.username) }}
+        {{form_row(formulaire.email)}}
+        {{form_row(formulaire.content)}}
+        {{form_row(formulaire.rating)}}
+        {{form_row(formulaire.reactions)}}
+        {{form_row(formulaire.watchedAt)}}
+        <input type="submit" value="Ajouter">
+    {# form_end() va écrire TOUT les form_row() manquants #}
     {{ form_end(formulaire)}}
 {% endblock %}
- 
