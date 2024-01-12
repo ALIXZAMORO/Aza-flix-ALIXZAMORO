@@ -45,20 +45,9 @@ array:8 [▼
                         <p>{{ movieForTwig.synopsis }}
                         </p>
 
-                        <div class="d-flex mb-4" style="color: orange;">
-                        {% for i in 0..4 %}
-                        {% if movieForTwig.rating >= i + 1 %}
-                            <i class="bi bi-star-fill"></i>
-                            {% elseif movieForTwig.rating >= i + 0.5 %}
-                            <i class="bi bi-star-half"></i>
-                            {% else %}
-                            <i class="bi bi-star"></i>
-                            {% endif %}
-                            {% endfor %}
-
-                            <span class="ps-1">{{ movieForTwig.rating }}</span>
-                        </div>
-
+                        
+                        {% include 'partials/_stars.html.twig' with {'ratingStars': movieForTwig.rating} %}
+                        
                         {% if movieForTwig.type.name == 'série' %}
                             <h2>{{ movieForTwig.seasons|length }} {{ movieForTwig.seasons|length > 1 ? 'Saisons' : 'Saison' }}</h2>
                             <ul class="list-unstyled">
