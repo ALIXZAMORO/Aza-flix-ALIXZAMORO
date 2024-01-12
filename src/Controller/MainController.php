@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Models\MovieModel;
 use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
+use App\Repository\ReviewRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,7 +49,7 @@ class MainController extends AbstractController
  * @return Response
  */
 
-public function show($id, MovieRepository $movieRepository, CastingRepository $castingRepository): Response
+public function show($id, MovieRepository $movieRepository, CastingRepository $castingRepository, ReviewRepository $reviewRepository): Response
  {
   $movie = $movieRepository->find($id);
   //dd($movie);
@@ -61,12 +62,23 @@ public function show($id, MovieRepository $movieRepository, CastingRepository $c
   
     dump($allCastingFromMovie);
 
+    $allReviews = $reviewRepository->findBy(
+      [
+          "movie" => $movie
+      ],
+      [
+          "rating" => "DESC"
+      ]
+  );
+
+
   $twigResponse = $this->render("main/show.html.twig",
    [
 
     "movieId" => $id,
     "movieForTwig" => $movie,
-    "allCastingFromBDD" => $allCastingFromMovie
+    "allCastingFromBDD" => $allCastingFromMovie,
+    "allReviewFromBDD" => $allReviews
 
   ]);
 
