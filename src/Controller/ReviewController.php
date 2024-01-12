@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Review;
 use App\Form\ReviewType;
 use App\Repository\MovieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ class ReviewController extends AbstractController
     /**
      * @Route("/movies/{id}/review/add", name="app_review_add", requirements={"id": "\d+"})
      */
-    public function index($id, MovieRepository $movieRepository, Request $request): Response
+    public function index($id, MovieRepository $movieRepository, Request $request, EntityManagerInterface $entityManagerInterface): Response
     {
         $movie = $movieRepository->find($id);
 
@@ -26,10 +27,18 @@ class ReviewController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted())
+        if ($form->isSubmitted() && $form->isValid())
         {
-            dd($newReview);
-        }
+            //dd($newReview);
+            $newReview->setMovie($movie);
+
+            $entityManagerInterface->persist($newReview);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute("movie_show", ["id"=> $movie->getId()]);
+
+            }
+        
 
         return $this->renderForm('review/index.html.twig', [
 
