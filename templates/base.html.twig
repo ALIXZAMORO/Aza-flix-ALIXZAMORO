@@ -20,8 +20,13 @@
 </head>
 
 <body>
+{% if app.request.attributes.get("_route") starts with "app_back" %}
+<h1>Welcome to back</h1>
+{% else %}
+{%  include "front/partials/_nav.html.twig" %}
+{% endif %}
 
-{%  include "partials/_nav.html.twig" %}
+
 <div class="container">
         {% block body %}{% endblock %}
 

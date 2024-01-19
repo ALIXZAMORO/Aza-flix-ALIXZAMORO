@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Movie;
 use App\Entity\Review;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -77,8 +79,16 @@ class ReviewType extends AbstractType
                 // ? https://symfony.com/doc/5.4/reference/forms/types/date.html#input
                 "input" => "datetime_immutable"
             ])
+
             // ! Object of class App\Entity\Movie could not be converted to string
-            // ->add('movie')
+             ->add('movie', EntityType::class, [
+
+                "multiple" =>false,
+                "expanded" => true,
+
+                "class" => Movie::class,
+                'choice_label' => 'title',
+             ])
         ;
             }
             
@@ -93,4 +103,4 @@ class ReviewType extends AbstractType
             ]);
         }
     }
-    
+ 
