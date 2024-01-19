@@ -20,12 +20,8 @@
 </head>
 
 <body>
-{% if app.request.attributes.get("_route") starts with "app_back" %}
-{%  include "back/partials/_nav.html.twig" %}
-{% else %}
-{%  include "front/partials/_nav.html.twig" %}
-{% endif %}
-
+{% set isBackOffice = (app.request.attributes.get("_route") starts with "app_back_")%}
+{% include 'partials/_fullnav.html.twig' with {'isBackOffice': isBackOffice} %}
 
 <div class="container">
         {% block body %}{% endblock %}
