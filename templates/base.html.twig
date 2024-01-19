@@ -21,7 +21,7 @@
 
 <body>
 {% if app.request.attributes.get("_route") starts with "app_back" %}
-<h1>Welcome to back</h1>
+{%  include "back/partials/_nav.html.twig" %}
 {% else %}
 {%  include "front/partials/_nav.html.twig" %}
 {% endif %}
