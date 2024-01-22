@@ -30,7 +30,7 @@ class MainController extends AbstractController
      dump($session->get("favoris"));
 
       
-      $twigResponse = $this->render("main/home.html.twig",
+      $twigResponse = $this->render("front/main/home.html.twig",
     [
 
       "movieList" => $allMovies
@@ -42,9 +42,9 @@ class MainController extends AbstractController
 
 
 /**
- * affichage d'un film
+ * affichage des détails d'un film
  * 
- * @Route("/movies/{id}", name="movie_show", requirements={"id"="\d+"} ,methods={"GET"})
+ * @Route("/movies/{id}", name="app_front_movie_show", requirements={"id"="\d+"} ,methods={"GET"})
  * 
  * @return Response
  */
@@ -72,7 +72,7 @@ public function show($id, MovieRepository $movieRepository, CastingRepository $c
   );
 
 
-  $twigResponse = $this->render("main/show.html.twig",
+  $twigResponse = $this->render("front/main/show.html.twig",
    [
 
     "movieId" => $id,
@@ -88,13 +88,13 @@ public function show($id, MovieRepository $movieRepository, CastingRepository $c
 
 
  /**
-  * @Route("/search", name="movie_search")
+  * @Route("/search", name="app_front_movie_search")
   * 
   * @return Response
   */
  public function  list(): Response
  {
-  return $this->render("main/list.html.twig");
+  return $this->render("front/main/list.html.twig");
  }
 
 }

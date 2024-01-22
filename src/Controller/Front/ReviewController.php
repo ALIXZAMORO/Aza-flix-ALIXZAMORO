@@ -35,7 +35,7 @@ class ReviewController extends AbstractController
             $entityManagerInterface->persist($newReview);
             $entityManagerInterface->flush();
 
-            return $this->redirectToRoute("movie_show", ["id"=> $movie->getId()]);
+            return $this->redirectToRoute("app_front_movie_show", ["id"=> $movie->getId()]);
 
             }
         
