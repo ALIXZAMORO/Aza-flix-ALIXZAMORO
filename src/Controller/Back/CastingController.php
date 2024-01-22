@@ -36,7 +36,8 @@ class CastingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $castingRepository->add($casting, true);
-
+            // TODO j'ajoute un flash message de réussite
+            $this->addFlash("success", "Votre Casting a bien été ajoutée.");
             return $this->redirectToRoute('app_back_casting_index', [], Response::HTTP_SEE_OTHER);
         }
 

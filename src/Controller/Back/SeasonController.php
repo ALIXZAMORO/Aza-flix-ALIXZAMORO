@@ -37,6 +37,9 @@ class SeasonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->add($season, true);
 
+            // TODO j'ajoute un flash message de réussite
+            $this->addFlash("success", "Votre Saison a bien été ajoutée.");
+
             return $this->redirectToRoute('app_back_season_index', [], Response::HTTP_SEE_OTHER);
         }
 
