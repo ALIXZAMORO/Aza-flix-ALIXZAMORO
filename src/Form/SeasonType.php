@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Movie;
 use App\Entity\Season;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +16,12 @@ class SeasonType extends AbstractType
         $builder
             ->add('number')
             ->add('nbEpisodes')
-            ->add('movie')
+            ->add('movie', EntityType::class, [
+                "multiple" => false,
+                "expanded" => false,
+                "class" => Movie::class,
+                "choice_label" => "title"
+            ])
         ;
     }
 

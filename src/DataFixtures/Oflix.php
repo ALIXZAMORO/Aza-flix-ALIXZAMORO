@@ -90,7 +90,7 @@ class Oflix extends Fixture
                 
             $newMovie = new Movie();
 
-            $newMovie->setTitle("Titre #" .$i);
+            
             $newMovie->setDuration(mt_rand(10, 360));
             $newMovie->setRating(mt_rand(0,50) / 10);
             $newMovie->setSummary($fakerFr->realText());
@@ -107,6 +107,12 @@ class Oflix extends Fixture
 
             $randomType = $allTypes[mt_rand(0, count($allTypes)-1)];
             $newMovie->setType($randomType);
+
+            if ($randomType->getName() === "série"){
+                $newMovie->setTitle($faker->tvShow());
+            } else {
+                $newMovie->setTitle($faker->movie());
+            }
 
             $manager->persist($newMovie);
 
