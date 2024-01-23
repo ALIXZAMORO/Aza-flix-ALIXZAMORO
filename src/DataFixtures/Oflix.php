@@ -8,6 +8,7 @@ use App\Entity\Movie;
 use App\Entity\Person;
 use App\Entity\Season;
 use App\Entity\Type;
+use App\Entity\User;
 use Bluemmb\Faker\PicsumPhotosProvider;
 use Xylis\FakerCinema\Provider\Movie as FakerMovieProvider;
 use Xylis\FakerCinema\Provider\TvShow as FakerTvShowProvider;
@@ -35,6 +36,28 @@ class Oflix extends Fixture
         $faker->addProvider(new FakerMovieProvider ($faker));
         $faker->addProvider(new FakerPersonProvider($faker));
         $faker->addProvider(new FakerTvShowProvider($faker));
+
+        $admin = new User();
+        $admin->setEmail("admin@admin.com");
+        $admin->setPassword('$2y$13$IQUJwP4xPesp/zEXn7mdHeUdU8hXtI/BTnBRSyuWlDfsBNj84/4OC');
+        $admin->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
+
+        $managerUser = new User();
+        $managerUser->setEmail("manager@manager.com");
+        $managerUser->setPassword('$2y$13$OAFR2QZwMqf.vtRiRFF9Ke9HgXjNLjwOtWddjhgvt4n0Zx7DYolEu');
+        $managerUser->setRoles(['ROLE_MANAGER']);
+
+        $manager->persist($managerUser);
+
+        $user = new User();
+        $user->setEmail("user@user.com");
+        $user->setPassword('$2y$13$3umpdLm9PF7B3Ec9SRG6M.Ur835CcGzNV5lfvas7/9kGFf356g44K');
+        $user->setRoles(['ROLE_USER']);
+
+        $manager->persist($user);
+
 
 
         $genres = ["Action", "Animation", "Aventure", "Comédie", "Dessin Animé", "Documentaire", "Drame", "Espionnage", "Famille", "Fantastique", "Historique", "Policier", "Romance", "Science-fiction", "Thriller", "Western"];
