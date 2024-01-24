@@ -19,7 +19,7 @@ class MovieController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      * 
-     * @isGranted("ROLE_ADMIN")
+     * 
      */
     public function index(MovieRepository $movieRepository): Response
     {
