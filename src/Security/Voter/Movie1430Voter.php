@@ -50,7 +50,7 @@ class Movie1430Voter extends Voter
         // ? https://www.php.net/manual/fr/datetime.format.php
         // $heure =>  810, 1430
         $heure = $dateDuJour->format("Gi");
-        if ($heure > 1500){
+        if ($heure > 1700){
             // Tu n'a pas le droit
             return false;
         }
