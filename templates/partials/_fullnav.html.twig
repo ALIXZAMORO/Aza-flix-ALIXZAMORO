@@ -1,7 +1,10 @@
-
-
+{#
+Une vue partielle sera utilisé avec l'instruction include
+donc il n'y a pas de block, car on ne fait pas d'héritage
+c'est vraiment une inclusion du code HTML/twig de cette vue
+#}
     <!-- Nav -->
-    <nav class="navbar navbar-expand-lg navbar-dark {% if isBackOffice %}bg-success {% else %}bg-dark{% endif %} ">
+    <nav class="navbar navbar-expand-lg navbar-dark {% if isBackOffice %}bg-success{% else %}bg-dark{% endif %}">
         <div class="container-fluid">
             <a href="{{ path('default') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none header-logo">
                 <img src="{{ asset('favicon.png') }}" height="24" alt="Logo O'flix">
@@ -23,25 +26,40 @@
                         <a class="nav-link" href="{{ path('app_front_favorites') }}"><i class="bi bi-bookmark"></i> Ma liste</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <span>Charles</span>
-                            <i class="bi bi-person-square"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_back_default')}}">Backoffice</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                {# dump(app.user) #}
+                {% if is_granted("IS_AUTHENTICATED_FULLY")%}
 
-                <a href="{{ path('app_login') }}"><button type="button" class="btn btn-danger me-2">Connexion</button></a>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                <span>{{ app.user.getUserIdentifier() }}</span>
+                                <i class="bi bi-person-square"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Profil</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_back_default')}}">Backoffice</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <ul>
+                                        {% for role in app.user.roles %}
+                                            <li>{{ role }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% endif %}
+
+                {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+                    <a href="{{ path('app_logout') }}"><button type="button" class="btn btn-danger me-2">Deconnexion</button></a>
+                {% else %}
+                    <a href="{{ path('app_login') }}"><button type="button" class="btn btn-danger me-2">Connexion</button></a>
+                {% endif %}
+                
 
                 <form class="d-flex" action="list.html">
                     <input class="form-control form-control-sm me-2" name="search" type="search" placeholder="Rechercher...">
