@@ -3,12 +3,12 @@
 namespace App\Controller\Back;
 
 use App\Entity\User;
+use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,13 +30,28 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="app_back_user_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, UserRepository $userRepository): Response
+    public function new(
+        Request $request, 
+        UserRepository $userRepository, 
+        UserPasswordHasherInterface $userPasswordHasherInterface
+        ): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // ! le mot de passe n'est pas hashé
+            // TODO : has du mot de passe avant l'insertion en BDD
+            // UserPasswordHasherInterface le service de hash de mot de passe
+            // il nous faut le mot de passe : 
+            // * on le récupère de l'objet remplit par le formulaire
+            $plainPassword = $user->getPassword();
+            // je hash le mot de passe
+            $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $plainPassword);
+            // * j'oublie pas de mettre à jour mon objet
+            $user->setPassword($hashedPassword);
+            // je met à jour la BDD
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_back_user_index', [], Response::HTTP_SEE_OTHER);
@@ -61,20 +76,35 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_back_user_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasherInterface): Response
+    public function edit(
+        Request $request, 
+        User $user, 
+        UserRepository $userRepository, 
+        UserPasswordHasherInterface $userPasswordHasherInterface
+        ): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $plainPassword = $user->getPassword();
-
-            $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $plainPassword);
+            // ! le mot de passe n'est pas hashé
+            // TODO : has du mot de passe avant la mise à jour en BDD
+            // UserPasswordHasherInterface le service de hash de mot de passe
+            // il nous faut le mot de passe : 
+            // * on le récupère depuis la requete 
+            // car on a désactivé la mise à jour auto par le formulaire
+            $plainPassword = $request->request->get("password");
             
-            $user->setPassword($hashedPassword);
-
+            if (!empty($plainPassword)){
+                // je hash le mot de passe
+                $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $plainPassword);
+                // * j'oublie pas de mettre à jour mon objet
+                $user->setPassword($hashedPassword);     
+            }
+        
+            // je met à jour la BDD
             $userRepository->add($user, true);
+            
 
             return $this->redirectToRoute('app_back_user_index', [], Response::HTTP_SEE_OTHER);
         }
