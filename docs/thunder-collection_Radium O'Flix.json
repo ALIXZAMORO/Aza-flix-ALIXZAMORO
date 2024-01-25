@@ -1,0 +1,31 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Radium O'Flix",
+    "dateExported": "2024-01-25T17:20:35.617Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "eaf0de00-8722-4d33-ae4e-945d25256a39",
+            "name": "Genres",
+            "containerId": "",
+            "created": "2024-01-25T17:16:16.929Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "0df56c02-0a75-4beb-929f-da246a9880ad",
+            "colId": "580ff744-cca6-4db5-87b9-0fbfd69b12bc",
+            "containerId": "eaf0de00-8722-4d33-ae4e-945d25256a39",
+            "name": "http://localhost:8080/api/genres",
+            "url": "http://localhost:8080/api/genres",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-25T17:17:16.297Z",
+            "modified": "2024-01-25T17:17:16.297Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

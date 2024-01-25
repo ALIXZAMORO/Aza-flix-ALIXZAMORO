@@ -9,6 +9,7 @@ use App\Entity\Person;
 use App\Entity\Season;
 use App\Entity\Type;
 use App\Entity\User;
+use App\Services\OmdbApi;
 use Bluemmb\Faker\PicsumPhotosProvider;
 use Xylis\FakerCinema\Provider\Movie as FakerMovieProvider;
 use Xylis\FakerCinema\Provider\TvShow as FakerTvShowProvider;
@@ -19,6 +20,22 @@ use Doctrine\Persistence\ObjectManager;
 
 class Oflix extends Fixture
 {
+
+        /**
+     * Service OmdbApi
+     *
+     * @var OmdbApi
+     */
+    private $omdbApi;
+
+    /**
+    * Constructor
+    */
+    public function __construct(OmdbApi $omdbApi)
+    {
+        $this->omdbApi = $omdbApi;
+    }
+    
     /**
      * Création de donnée
      *
@@ -136,6 +153,13 @@ class Oflix extends Fixture
             } else {
                 $newMovie->setTitle($faker->movie());
             }
+
+            // $omdbApiModel = $this->omdbApi->fetch("aaaaa");
+            // dd($omdbApiModel->getPoster());
+            $omdbApiModel = $this->omdbApi->fetch($newMovie->getTitle());
+            // dd($omdbApiModel);
+            $newMovie->setPoster($omdbApiModel->getPoster());
+
 
             $manager->persist($newMovie);
 

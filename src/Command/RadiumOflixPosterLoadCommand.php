@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Repository\MovieRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,25 +19,27 @@ class RadiumOflixPosterLoadCommand extends Command
     protected static $defaultDescription = 'met à jour tout les poster de la BDD avec OMDBAPI';
 
     /**
+     * Undocumented variable
+     *
      * @var MovieRepository
      */
     private $movieRepository;
 
     /**
-     * nous permet de faire des requetes HTTP
+     * Undocumented variable
      *
      * @var HttpClientInterface
      */
     private $client;
 
-    /**
+        /**
      * uniquement pour le flush
      *
      * @var EntityManagerInterface
      */
     private $entityManager;
 
-    private $apiKey = "a93b767b";
+    private $apiKey = "c28aa85e";
 
     public function __construct(
         MovieRepository $movieRepository,
@@ -170,7 +173,7 @@ class RadiumOflixPosterLoadCommand extends Command
         // 4. on flush
         $this->entityManager->flush();
 
-        $io->success('Yahoo les fims sont à jour !');
+        $io->success('Youhou les fims sont à jour !');
 
         return Command::SUCCESS;
 
