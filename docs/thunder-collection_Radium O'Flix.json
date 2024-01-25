@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Radium O'Flix",
-    "dateExported": "2024-01-25T17:20:35.617Z",
+    "dateExported": "2024-01-25T20:01:50.513Z",
     "version": "1.1",
     "folders": [
         {
@@ -10,6 +10,13 @@
             "containerId": "",
             "created": "2024-01-25T17:16:16.929Z",
             "sortNum": 10000
+        },
+        {
+            "_id": "4000ac9f-2c22-4e1f-8134-7833971d58cc",
+            "name": "Movies",
+            "containerId": "",
+            "created": "2024-01-25T19:59:50.120Z",
+            "sortNum": 40000
         }
     ],
     "requests": [
@@ -25,6 +32,45 @@
             "modified": "2024-01-25T17:17:16.297Z",
             "headers": [],
             "params": [],
+            "tests": []
+        },
+        {
+            "_id": "dee63c84-9650-46ed-93ec-63dd495559fc",
+            "colId": "580ff744-cca6-4db5-87b9-0fbfd69b12bc",
+            "containerId": "4000ac9f-2c22-4e1f-8134-7833971d58cc",
+            "name": "http://localhost:8080/api/movies/201",
+            "url": "http://localhost:8080/api/movies/201",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-25T19:59:24.529Z",
+            "modified": "2024-01-25T19:59:24.529Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3ab1c9c1-6f61-4253-aa06-3c234d716301",
+            "colId": "580ff744-cca6-4db5-87b9-0fbfd69b12bc",
+            "containerId": "eaf0de00-8722-4d33-ae4e-945d25256a39",
+            "name": "OmdbApi",
+            "url": "http://www.omdbapi.com/?t=totoro&apikey=c28aa85e",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-01-25T17:38:55.481Z",
+            "modified": "2024-01-25T17:39:01.271Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "t",
+                    "value": "totoro",
+                    "isPath": false
+                },
+                {
+                    "name": "apikey",
+                    "value": "c28aa85e",
+                    "isPath": false
+                }
+            ],
             "tests": []
         }
     ]
