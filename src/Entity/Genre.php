@@ -6,6 +6,8 @@ use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GenreRepository::class)
@@ -16,16 +18,30 @@ class Genre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"genre_browse"})
+     * @Groups({"genre_read"})
+     * @Groups({"movie_read"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=64)
+     * 
+     * @Groups({"genre_browse"})
+     * @Groups({"genre_read"})
+     * @Groups({"movie_read"})
+     * 
+     * @Assert\NotBlank
+     * @Assert\Length(min = 5, max=64)
      */
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="genres")
+     * 
+     * @Groups({"genre_browse"})
+     * @Groups({"genre_read"})
      */
     private $movies;
 

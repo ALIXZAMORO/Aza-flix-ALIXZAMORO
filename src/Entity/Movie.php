@@ -6,6 +6,8 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -16,67 +18,112 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"genre_browse", "movie_read"})
+     * @Groups({"movie_browse"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"genre_browse"})
+     * @Groups({"movie_read"})
+     * @Groups({"movie_browse"})
+     * 
+     * @Assert\NotBlank
+     * ? https://symfony.com/doc/5.4/reference/constraints/Length.html
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"movie_read"})
+     * @Groups({"movie_browse"})
+     * 
+     * @Assert\NotBlank
      */
     private $duration;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"movie_read"})
+     * @Groups({"movie_browse"})
+     * 
+     * @Assert\NotBlank
      */
     private $rating;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"movie_browse"})
+     * @Assert\NotBlank
+     * @Assert\Length(min = 10)
      */
     private $summary;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"movie_read"})
+     * @Assert\NotBlank
+     * @Assert\Length(min = 20)
      */
     private $synopsis;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"movie_read"})
+     * @Assert\NotBlank
      */
     private $releaseDate;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"movie_read"})
+     * 
+     * @Assert\NotBlank
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"movie_read"})
+     * @Groups({"movie_browse"})
+     * 
+     * @Assert\NotBlank
      */
     private $poster;
 
     /**
      * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups({"movie_read"})
+     * @Groups({"movie_browse"})
+     * 
+     * @Assert\NotBlank
      */
     private $type;
 
     /**
      * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie")
+     * @Groups({"movie_read"})
      */
     private $castings;
 
     /**
      * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
+     * @Groups({"movie_read"})
      */
     private $genres;
 
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="movie")
+     * @Groups({"movie_read"})
      */
     private $seasons;
 
