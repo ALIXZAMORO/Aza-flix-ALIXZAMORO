@@ -20,3 +20,19 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    # * Merci Bruno B.
+    # ! le paramétrage de services doit ABSOLUMENT être à partir d'ici sinon cela ne sera pas pris en compte
+    # * c'est ici que l'on paramètre nos services
+    # Pour paramétrer un service je dois fournir le FQCN du service
+    App\EventSubscriber\MaintenanceSubscriber:
+        # on explique que notre service a des arguments
+        arguments:
+            # on précise alors le nom de l'argument
+            # ainsi que la valeur qu'il va avoir
+            # ? https://symfony.com/doc/current/configuration/env_var_processors.html#built-in-environment-variable-processors
+            # env(resolve) nous donnera une chaine de caractère
+            # hors nous on veux un boolean : on remplace resolve par bool
+            $argMaintenanceActive: '%env(bool:MAINTENANCE_ACTIVE)%'
+    

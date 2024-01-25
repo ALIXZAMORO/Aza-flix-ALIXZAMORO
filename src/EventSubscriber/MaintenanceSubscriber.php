@@ -7,9 +7,24 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class MaintenanceSubscriber implements EventSubscriberInterface
 {
+    private $maintenanceActive;
+
+    /**
+     * @param bool $argMaintenanceActive paramétrable dans le fichier services.yaml
+     */
+    public function __construct($argMaintenanceActive)
+    {
+        $this->maintenanceActive = $argMaintenanceActive;
+    }
 
     public function onKernelResponse(ResponseEvent $event): void
     {
+        // TODO : rendre la modification conditionnelle
+        if (!$this->maintenanceActive){
+            // la maintenance est désactivé
+            // on s'arrête là
+            return;
+        }
 
         //dd($event);
         // on trouve dans l'argument $event :
