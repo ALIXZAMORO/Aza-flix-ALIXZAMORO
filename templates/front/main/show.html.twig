@@ -1,31 +1,40 @@
 {% extends 'base.html.twig'%}
 
 {% block body %}
+        <!-- main -->
+    {# movieForTwig #}
+        {# dump(movieForTwig) #}
+        {#
+        App\Entity\Movie {#248 ▼
+            -id: 1
+            -title: "The Jungle Book"
+            -duration: 90
+            -rating: 4.0
+            -summary: "sDGHGDH"
+            -synopsis: """
+                QSHJSERQGDSQDS<Fdfgjyr
+                shgfjk;drhf
+                srhjf
+                gj
+                rstjg
+                hrert
+                hgz
+                """
+            -releaseDate: DateTime @-3600 {#239 ▶}
+            -country: "USA"
+           -poster: "https://amc-theatres-res.cloudinary.com/amc-cdn/static/images/fallbacks/DefaultOneSheetPoster.jpg"
+            -type: Proxies\__CG__\App\Entity\Type {#208 ▶}
+            }
+        #}
 
-    <!-- main -->
-{# movieForTwig #}
-
-{% dump(movieForTwig) %}
-{# 
-array:8 [▼
-  "type" => "Série"
-  "title" => "Game of Thrones"
-  "release_date" => 2011
-  "duration" => 52
-  "summary" => "Neuf familles nobles se battent pour le contrôle des terres de Westeros, tandis qu'un ancien ennemi revient..."
-  "synopsis" => "Il y a très longtemps, à une époque oubliée, une force a détruit l'équilibre des saisons. Dans un pays où l'été peut durer plusieurs années et l'hiver toute une ▶"
-  "poster" => "https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg"
-  "rating" => 4.7
-]
-#}
-    <div class="container bg-lighttt pt-5">
+    <div class="container bg-light pt-5">
 
         <div class="row mb-2">
 
             <div class="col">
 
                 <div
-                    class="row g-0 borderrr rrrounded overflow-hidden flex-md-row align-items-start mb-4 shadow-smmm position-relative">
+                    class="row g-0 border rounded overflow-hidden flex-md-row align-items-start mb-4 shadow-sm position-relative">
                     <div class="col-4 movie__poster img-thumbnail"
                         style="background-image: url({{ movieForTwig.poster }});">
                         <img src="{{ asset('images/poster-placeholder.png') }}" class="img-fluid">
@@ -33,7 +42,12 @@ array:8 [▼
                     </div>
 
                     <div class="col-8 p-4 d-flex flex-column position-static bg-light">
+                        
+                        {% include "front/partials/_favorites.html.twig" with {'movieIDForPartial': movieForTwig.id}  %}
+
+                        {#
                         <a href="{{ path('app_front_favorites_add', {'id': movieId }) }}" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
+                        #}
                         <strong class="d-inline-block mb-2 text-primary">{{ movieForTwig.type.name }}</strong>
                         <h3 class="mb-1">{{ movieForTwig.title }}</h3>
                         <div class="mb-1 text-muted">{{ movieForTwig.duration }} min</div>
@@ -41,20 +55,22 @@ array:8 [▼
                             {% for genre in movieForTwig.genres %}
                                 <span class="badge bg-warning text-dark">{{ genre.name }}</span>
                             {% endfor %}
+                            
                         </p>
                         <p>{{ movieForTwig.synopsis }}
                         </p>
-
                         
                         {% include 'front/partials/_stars.html.twig' with {'ratingStars': movieForTwig.rating} %}
-
+                        
+                        {# on conditionne la partie saison que pour les série #}
                         {% if movieForTwig.type.name == 'série' %}
                             <h2>{{ movieForTwig.seasons|length }} {{ movieForTwig.seasons|length > 1 ? 'Saisons' : 'Saison' }}</h2>
                             <ul class="list-unstyled">
                                 {% for season in movieForTwig.seasons %}
                                     <li><span class="badge bg-danger fs-6 mb-2">Saison {{ season.number }}</span><small class="ms-1">({{ season.nbEpisodes }} épisodes)</small></li>
                                 {% endfor %}
-
+                                
+                                
                             </ul>
                         {% endif %}
                         <dl class="row">
@@ -78,47 +94,47 @@ array:8 [▼
                             <dd class="col-sm-12">{{ movieForTwig.releaseDate|date("Y") }}</dd>
                         </dl>
                         <div class="d-flex mb-4">
-                        <a href="{{ path('app_review_add', {'id':movieForTwig.id})}}" class="btn btn-primary">Ajouter un commentaire</a>
-                    </div>
+                            <a href="{{ path('app_review_add', {'id':movieForTwig.id})}}" class="btn btn-primary">Ajouter un commentaire</a>
+                        </div>
+                        
+                        <div class="col-12 p-4 d-flex flex-column position-static bg-light">
+                            <dl class="row">
+                                {# allReviewFromBDD #}
+                                {% for review in allReviewFromBDD %}
 
-                    <div class="col-12 p-4 d-flex flex-column position-static bg-light">
-                    <dl class="row"> 
-                    {% for review in allReviewFromBDD %}
+                                <dt class="col-sm-12">Critiques de {{ review.username }}</dt>
+                                {% include 'front/partials/_stars.html.twig' with {'ratingStars': review.rating} %}
+                        
+                                        <em><p class="card-text">{{ review.content}}</p>
+                                        <p class="card-subtitle mb-2 text-muted">Vu le {{ review.watchedAt|date('d-m-Y') }}<p></em>
 
-                    <dt class="col-sm-12">Critiques de {{ review.username }}</dt>
-                    
-                    {% include 'front/partials/_stars.html.twig' with {'ratingStars': review.rating} %}
+                                    </div>
+                                    </div>
 
-                    <em><p class="card-text">{{ review.content }}</p>
-                    <p class="card-subtitle mb-2 text-muted">Vu le {{ review.watchedAt|date('d-m-Y') }}<p></em>
 
-                    </div>
-                    </div>
-                    
-                    
-
-                    <dd class="col-sm-12">
-
-                    {{ review.username }} a regardé <em>{{ movieForTwig.title }}</em> le {{ review.watchedAt|date('m/d/Y')}}:  <br> 
+                                <dd class="col-sm-12">
+                                
+                                        {{ review.username }} a regardé <em>{{ movieForTwig.title }}</em> le {{ review.watchedAt|date('m/d/Y')}}:  <br> 
                                         {{ review.content}} <br>
                                         <div> 
                                         {% for reaction in review.reactions %} 
                                             <span class="badge bg-info text-dark">{{ reaction }}</span> 
                                         {% endfor %} 
                                         </div>
-                                        {% else %}
+                                
                                     <div class="card" style="width: 18rem;">
-                                    <div class="card-body">
-                                    <p><span class="ps-1">Ce film n'a pas encore de critique<p></span>
+                                        <div class="card-body">
+                                        <p><span class="ps-1">Ce film n'a pas encore de critique<p></span>
+                                        </div>
                                     </div>
-                                    </div>
-                                        {% endfor %}
-
-
-                                        </dd>
-                                        </dl>
-
-
+                                {% endfor %}
+                                
+                                
+                                </dd>
+                                
+                            </dl>
+       
+                        </div>      
                     </div>
                 </div>
 
@@ -127,4 +143,5 @@ array:8 [▼
         </div>
 
     </div>
+
 {% endblock %}
