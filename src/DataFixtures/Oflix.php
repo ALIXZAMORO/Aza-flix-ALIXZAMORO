@@ -109,7 +109,7 @@ class Oflix extends Fixture
 
         /** @var Movie[] $allMovies */
         $allMovies = [];
-        for ($i=0; $i < 100; $i++) { 
+        for ($i=0; $i < 10; $i++) { 
                 
             $newMovie = new Movie();
 
