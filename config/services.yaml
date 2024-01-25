@@ -36,3 +36,17 @@ services:
             # hors nous on veux un boolean : on remplace resolve par bool
             $argMaintenanceActive: '%env(bool:MAINTENANCE_ACTIVE)%'
     
+    App\Services\OmdbApi:
+        # on explique que notre service a des arguments
+        arguments:
+            # on précise alors le nom de l'argument
+            # ainsi que la valeur qu'il va avoir
+            $apiKey: '%env(string:OMDB_API_KEY)%'
+    App\Services\OmdbApiRomain:
+        public: true
+        # on explique que notre service a des arguments
+        arguments:
+            # on précise alors le nom de l'argument
+            # ainsi que la valeur qu'il va avoir
+            $apiKey: '%env(string:OMDB_API_KEY)%'
+
