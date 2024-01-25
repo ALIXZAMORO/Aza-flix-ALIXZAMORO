@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Radium O'Flix",
-    "dateExported": "2024-01-25T20:01:50.513Z",
+    "dateExported": "2024-01-25T20:25:24.902Z",
     "version": "1.1",
     "folders": [
         {
@@ -69,6 +69,26 @@
                     "name": "apikey",
                     "value": "c28aa85e",
                     "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "64dbd2ab-f73d-4c93-b7a8-b5044cabbafc",
+            "colId": "580ff744-cca6-4db5-87b9-0fbfd69b12bc",
+            "containerId": "4000ac9f-2c22-4e1f-8134-7833971d58cc",
+            "name": "http://localhost:8080/api/movies/{id}",
+            "url": "http://localhost:8080/api/movies/{id}",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-01-25T20:25:08.126Z",
+            "modified": "2024-01-25T20:25:08.126Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "",
+                    "isPath": true
                 }
             ],
             "tests": []
